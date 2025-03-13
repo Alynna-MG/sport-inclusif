@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitnessPlus - Club de sport inclusif</title>
+    <style>
+        /* Réinitialisation CSS de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Variables de couleurs */
+        :root {
+            --primary: #e74c3c;     /* Rouge-orange comme le t-shirt de l'image */
+            --secondary: #f1c40f;   /* Jaune comme le pantalon de l'image */
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --accent: #3498db;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* En-tête */
+        header {
+            background-color: var(--dark);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Bannière */
+        .banner {
+            height: 80vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1600/800');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background-color: var(--primary);
+            margin: 1rem auto;
+        }
+
+        /* À propos */
+        .about {
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-image {
+            height: 200px;
+            background-color: var(--primary);
+            background-image: url('/api/placeholder/400/200');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .service-content {
+            padding: 1.5rem;
+        }
+
+        .service-content h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Témoignages */
+        .testimonials {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        .testimonials .section-title::after {
+            background-color: var(--secondary);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1rem;
+            background-color: var(--accent);
+            background-image: url('/api/placeholder/50/50');
+            background-size: cover;
+        }
+
+        .author-info h4 {
+            color: var(--secondary);
+        }
+
+        /* Galerie photo */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay span {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Contact */
+        .contact {
+            background-color: white;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        .contact-form {
+            flex: 2;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+        }
+
+        .submit-button {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        /* Pied de page */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--primary);
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .header-container {
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            .banner h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête -->
+    <header>
+        <div class="header-container">
+            <div class="logo">Fitness<span>Plus</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#a-propos">À propos</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#temoignages">Témoignages</a></li>
+                    <li><a href="#galerie">Galerie</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Bannière d'accueil -->
+    <section id="accueil" class="banner">
+        <h1>Le fitness accessible à tous</h1>
+        <p>Un club de sport bienveillant, adapté et personnalisé pour les personnes en surpoids ou obèses.</p>
+        <a href="#contact" class="cta-button">Essai gratuit</a>
+    </section>
+
+    <!-- À propos -->
+    <section id="a-propos" class="about">
+        <div class="container">
+            <h2 class="section-title">Notre approche</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src=téléchargement1.jpg" alt="Entraînement adapté">
+                </div>
+                <div class="about-text">
+                    <h3>Un espace où chacun trouve sa place</h3>
+                    <p>Chez FitnessPlus, nous croyons que le sport doit être accessible à tous, quels que soient votre poids ou votre condition physique. Notre club a été spécialement conçu pour offrir un environnement bienveillant, sans jugement, où chacun peut s'épanouir à son rythme.</p>
+                    <p>Nos coachs sont formés aux besoins spécifiques des personnes en surpoids ou obèses. Ils proposent des programmes adaptés qui privilégient le bien-être, le renforcement progressif et le plaisir de bouger, plutôt que la performance à tout prix.</p>
+                    <p>Notre philosophie repose sur trois piliers : respect du corps, progression adaptée et communauté solidaire.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">Nos services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('/api/placeholder/400/200')"></div>
+                    <div class="service-content">
+                        <h3>Programmes adaptés</h3>
+                        <p>Des programmes d'entraînement spécifiquement conçus pour les personnes en surpoids, avec une attention particulière aux articulations et à la progression graduelle.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('/api/placeholder/400/200')"></div>
+                    <div class="service-content">
+                        <h3>Coach personnel</h3>
+                        <p>Un accompagnement personnalisé avec des coachs formés aux besoins spécifiques des personnes en surpoids, pour atteindre vos objectifs en toute sécurité.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background-image: url('/api/placeholder/400/200')"></div>
+                    <div class="service-content">
+                        <h3>Cours collectifs</h3>
+                        <p>Des cours adaptés en petits groupes pour se motiver ensemble : renforcement, cardio doux, aquagym, stretching et bien d'autres activités accessibles à tous.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Témoignages -->
+    <section id="temoignages" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Témoignages</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"J'ai enfin trouvé un club où je me sens à l'aise. Les coachs sont bienveillants et les exercices adaptés à ma condition. Je me sens revivre depuis que j'ai commencé chez FitnessPlus."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Marie L.</h4>
+                            <p>Membre depuis 8 mois</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Après avoir abandonné plusieurs salles de sport où je me sentais jugé, j'ai enfin trouvé ma place. L'ambiance est chaleureuse et on progresse à son rythme sans pression."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Thomas D.</h4>
+                            <p>Membre depuis 1 an</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"Les équipements sont adaptés, les coachs comprennent nos besoins et nous encouragent sans nous mettre mal à l'aise. J'ai perdu du poids, mais surtout j'ai gagné en énergie et en confiance."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <h4>Sophie M.</h4>
+                            <p>Membre depuis 6 mois</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galerie photo -->
+    <section id="galerie">
+        <div class="container">
+            <h2 class="section-title">Galerie photo</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="karate.jpg" alt="Entraînement adapté" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span>Entraînement adapté</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="téléchargement.jpg" alt="Exercice ballon" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span>Exercice ballon</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="coursco.jpg" alt="Cours collectif" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span>Cours collectif</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="marche.jpg" alt="Équipement adapté" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span>Équipement adapté</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="/api/placeholder/300/300" alt="Coaching personnel" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span>Coaching personnel</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="/api/placeholder/300/300" alt="Espace cardio" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span>Espace cardio</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Nous contacter</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Informations de contact</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <p>15 rue du Sport, 75000 Paris</p>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <p>01 23 45 67 89</p>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">✉️</div>
+                            <p>contact@fitnessplus.fr</p>
+                        </div>
+                    </div>
+                    <h3>Horaires d'ouverture</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">🕒</div>
+                            <p>Lundi - Vendredi: 7h - 21h</p>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🕒</div>
+                            <p>Samedi: 9h - 18h</p>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🕒</div>
+                            <p>Dimanche: 10h - 14h</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <select id="subject" class="form-control" required>
+                                <option value="">Choisir un sujet</option>
+                                <option value="information">Demande d'information</option>
+                                <option value="essai">Essai gratuit</option>
+                                <option value="inscription">Inscription</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">Fitness<span>Plus</span></div>
+                <p>Un espace de fitness bienveillant et adapté où chacun peut s'épanouir à son rythme, sans jugement.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">FB</a>
+                    <a href="#" class="social-link">IG</a>
+                    <a href="#" class="social-link">TW</a>
+                    <a href="#" class="social-link">YT</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Liens rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#a-propos">À propos</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#temoignages">Témoignages</a></li>
+                    <li><a href="#galerie">Galerie</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Programmes adaptés</a></li>
+                    <li><a href="#">Coach personnel</a></li>
+                    <li><a href="#">Cours collectifs</a></li>
+                    <li><a href="#">Suivi nutritionnel</a></li>
+                    <li><a href="#">Bilans santé</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Inscrivez-vous pour recevoir nos conseils et actualités</p>
+                <form class="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Votre email" class="form-control" required>
+                    </div>
+                    <button type="submit" class="submit-button">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 FitnessPlus. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Script simple pour la navigation fluide
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Formulaire de contact
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Ici, vous ajouteriez normalement le code pour envoyer les données du formulaire
+            alert('Merci pour votre message ! Nous vous contacterons bientôt.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
